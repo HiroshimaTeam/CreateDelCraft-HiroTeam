@@ -30,7 +30,6 @@ namespace HiroTeam\CreateDelCraft;
 
 use pocketmine\crafting\CraftingManager;
 use pocketmine\crafting\CraftingManagerFromDataHelper;
-use pocketmine\crafting\ShapedRecipe;
 use pocketmine\event\inventory\CraftItemEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
