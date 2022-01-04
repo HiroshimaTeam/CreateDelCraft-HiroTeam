@@ -6,9 +6,11 @@
 [ENG] This is a [PocketMine-MP](https://github.com/pmmp/PocketMine-MP) (or forks) plugin allows you to delete default crafts and create new crafts ! :grin: <br/>
 <br/>
 [FRA] C'est un [PocketMine-MP](https://github.com/pmmp/PocketMine-MP) plugin qui vous permet de supprimer des crafts par defaut et de créer de nouveaux crafts ! :grin: <br/>
-
+<br/>
+New craft
 <img width="257" alt="Capture" src="https://user-images.githubusercontent.com/76572999/148137277-96bae2fb-b1e6-4235-9a1b-c90d6a956f8a.PNG">
 <img width="143" alt="Capture3" src="https://user-images.githubusercontent.com/76572999/148137284-cb2c91f7-7cd7-43a3-a625-a3b4bd29b558.PNG">
+Delete craft
 <img width="256" alt="Capture2" src="https://user-images.githubusercontent.com/76572999/148137290-3383640c-12dc-478f-8a72-f85e0e076bd4.PNG">
 
 
