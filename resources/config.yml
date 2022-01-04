@@ -1,0 +1,112 @@
+#CreateDelCraft by HiroTeam-Willy | Plugin de CreateDelCraft par la HiroTeam-Willy
+#██╗░░██╗██╗██████╗░░█████╗░████████╗███████╗░█████╗░███╗░░░███╗
+#██║░░██║██║██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗████╗░████║
+#███████║██║██████╔╝██║░░██║░░░██║░░░█████╗░░███████║██╔████╔██║
+#██╔══██║██║██╔══██╗██║░░██║░░░██║░░░██╔══╝░░██╔══██║██║╚██╔╝██║
+#██║░░██║██║██║░░██║╚█████╔╝░░░██║░░░███████╗██║░░██║██║░╚═╝░██║
+#╚═╝░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝
+#description:
+#ENG: This plugin allow you to delete defaults crafts and create new crafts
+#FRA: Ce plugin permet de supprimer les crafts par defauts et d'en créer de nouveau
+
+
+#------------------------------------------------------
+#------------<!!>-DELETE DEFAULT CRAFT-<!!>------------
+#------------------------------------------------------
+deleteCraft:
+  - '58' #FORMAT: ID
+  - '256'
+  - '265'
+
+
+#------------------------------------------------------
+#--------------<!!>-CREATE NEW CRAFT-<!!>--------------
+#------------------------------------------------------
+addCraft:
+#------------------------------------------------------
+#ENG: A diamond block by random item crafting
+#FRA: Un bloc de diamant en craftant avec des items aléatoire
+#------------------------------------------------------
+  -
+    #ENG: Item in the crafting table grid like in your crafting table (3x3 max) or in your inventory (2x2 max)
+    #FRA: Disposition des items comme dans votre grille de table de craft (3x3 max) ou celui de votre inventaire (2x2 max)
+    shape: [
+    'ABC',
+    'DEF',
+    'GHI'
+    ]
+    input:
+      A: '1:0' #FORMAT: ID:META
+      B: '2:0'
+      C: '3:0'
+      D: '4:0'
+      E: '5:0'
+      F: '6:0'
+      G: '7:0'
+      H: '8:0'
+      I: '9:0'
+    output: '57:0:1' #FORMAT: ID:META:AMOUNT
+
+#------------------------------------------------------
+#ENG: Craft a diamond by a iron block
+#FRA: Craft d'un diamant par un block de fer
+#------------------------------------------------------
+  -
+    shape: [
+      'A',
+    ]
+    input:
+      A: '42:0'
+    output: '264:0:1'
+
+#------------------------------------------------------
+#ENG: Full leather armor by wood crafting
+#FRA: Full armure en cuir en craftant avec du bois
+#------------------------------------------------------
+
+#ENG: Leather helmet
+#FRA: Casque en cuir
+  -
+    shape: [
+      'AAA',
+      'A A'
+    ]
+    input:
+      A: '5:0'
+    output: '298:0:1'
+
+#ENG: Leather tunic
+#FRA: plaston en cuir
+  -
+    shape: [
+      'A A',
+      'AAA',
+      'AAA'
+    ]
+    input:
+      A: '5:0'
+    output: '299:0:1'
+
+#ENG: Leather pants
+#FRA: Pantalon en cuir
+  -
+    shape: [
+    'AAA',
+    'A A',
+    'A A'
+    ]
+    input:
+      A: '5:0'
+    output: '300:0:1'
+
+#ENG: Leather boots
+#FRA: Bottes en cuir
+  -
+    shape: [
+    'A A',
+    'A A'
+    ]
+    input:
+      A: '5:0'
+    output: '301:0:1'
+
