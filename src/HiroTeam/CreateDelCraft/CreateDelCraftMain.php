@@ -30,6 +30,8 @@ namespace HiroTeam\CreateDelCraft;
 
 use pocketmine\crafting\CraftingManager;
 use pocketmine\crafting\CraftingManagerFromDataHelper;
+use pocketmine\crafting\ShapedRecipe;
+use pocketmine\crafting\ShapelessRecipe;
 use pocketmine\event\inventory\CraftItemEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -53,23 +55,34 @@ class CreateDelCraftMain extends PluginBase implements Listener
     public function playerCraftEvent(CraftItemEvent $event)
     {
         $recipe = $event->getRecipe();
-        $shape = $recipe->getShape();
-        foreach ($this->deletedCraft as $deletedCraft) {
-            if ($shape !== $deletedCraft['shape']) continue;
-            foreach ($recipe->getResults() as $result) {
-                if ($deletedCraft['output'] !== $result->getId()) continue;
-                $sameIngredientQuantity = 0;
-                for ($y = 0; $y < $recipe->getHeight(); ++$y) {
-                    for ($x = 0; $x < $recipe->getWidth(); ++$x) {
-                        $ingredient = $recipe->getIngredient($x, $y);
-                        if ($ingredient->isNull()) continue;
-                        $targetItem = $deletedCraft['input'][$shape[$y][$x]];
-                        if ($targetItem['id'] === $ingredient->getId()) {
-                            $sameIngredientQuantity++;
+        if ($recipe instanceof ShapedRecipe) {
+            $shape = $recipe->getShape();
+            foreach ($this->deletedCraft as $deletedCraft) {
+                if ($shape !== $deletedCraft['shape']) continue;
+                foreach ($recipe->getResults() as $result) {
+                    if ($deletedCraft['output'] !== $result->getId()) continue;
+                    $sameIngredientQuantity = 0;
+                    for ($y = 0; $y < $recipe->getHeight(); ++$y) {
+                        for ($x = 0; $x < $recipe->getWidth(); ++$x) {
+                            $ingredient = $recipe->getIngredient($x, $y);
+                            if ($ingredient->isNull()) continue;
+                            $targetItem = $deletedCraft['input'][$shape[$y][$x]];
+                            if ($targetItem['id'] === $ingredient->getId()) {
+                                $sameIngredientQuantity++;
+                            }
                         }
                     }
+                    if ($sameIngredientQuantity === count($recipe->getIngredientList())) {
+                        $event->cancel();
+                        break 2;
+                    }
                 }
-                if ($sameIngredientQuantity === count($recipe->getIngredientList())) {
+            }
+        } elseif ($recipe instanceof ShapelessRecipe) {
+            foreach ($this->deletedCraft as $deletedCraft) {
+                foreach ($recipe->getResults() as $result) {
+                    if ($deletedCraft['output'] !== $result->getId()) continue;
+                    if ($recipe->getIngredientList()[0]->getId() !== $deletedCraft['input']) continue;
                     $event->cancel();
                     break 2;
                 }
@@ -100,6 +113,16 @@ class CreateDelCraftMain extends PluginBase implements Listener
                 'shape' => $recipe['shape']
             ];
         }
+        foreach ($recipes['shapeless'] as $index => $recipe) {
+            $id = $recipe['output'][0]['id'];
+            if (!in_array($id, $deleteCraft)) continue;
+            unset($recipes['shapeless'][$index]);
+            $this->deletedCraft[] = [
+                'output' => $id,
+                'input' => $recipe['input'][0]['id'],
+                'shape' => null
+            ];
+        }
         foreach ($config->get('addCraft') as $recipe) {
             $outputIdMetaAmount = explode(':', $recipe['output']);
             $input = [];
@@ -122,7 +145,8 @@ class CreateDelCraftMain extends PluginBase implements Listener
                 ]]
             ];
         }
-        file_put_contents($this->getDataFolder() . 'recipes_cache.json', json_encode($recipes));
+        $filePath = $this->getDataFolder() . 'recipes_cache.json';
+        file_put_contents($filePath, json_encode($recipes));
         $this->newCratingManger = CraftingManagerFromDataHelper::make(Path::join($this->getDataFolder() . 'recipes_cache.json'));
         $craftingManager = $this->getServer()->getCraftingManager();
         foreach ($this->newCratingManger->getShapedRecipes() as $shapedRecipes) {
@@ -130,5 +154,6 @@ class CreateDelCraftMain extends PluginBase implements Listener
                 $craftingManager->registerShapedRecipe($recipe);
             }
         }
+        @unlink($filePath);
     }
 }
