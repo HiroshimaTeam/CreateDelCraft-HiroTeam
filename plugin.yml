@@ -1,6 +1,6 @@
 name: CreateDelCraft-HiroTeam
 author: HiroTeam-Willy
-version: 1.0.0
+version: 1.5.0
 api: 4.0.0
 main: HiroTeam\CreateDelCraft\CreateDelCraftMain
 website: https://github.com/HiroshimaTeam
